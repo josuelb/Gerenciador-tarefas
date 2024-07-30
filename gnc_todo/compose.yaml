@@ -1,0 +1,24 @@
+services:
+    gnc_todo_database:
+      image: mysql
+      volumes:
+        - pgdata:var/lib/mysql/data
+      environment:
+        MYSQL_USER: root
+        MYSQL_DB: gnc_todo
+        MYSQL_PASSWORD: Arrebatamento2#
+      ports:
+        - "3306:3306"
+
+    gnc_todo_app:
+      image: gnc_todo_app
+      build: .
+      ports:
+        - "8000:8000"
+      depends_on:
+        - gnc_todo_database
+      environment:
+        DATABASE_URL: mysql://root:Arrebatamento2#@gnc_todo_database:3306/gnc_todo
+
+volumes:
+  pgdata:
